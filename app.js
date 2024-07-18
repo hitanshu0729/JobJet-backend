@@ -22,6 +22,9 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+app.get("/", (req, res) => {
+  res.json({ message: "Hello" });
+});
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

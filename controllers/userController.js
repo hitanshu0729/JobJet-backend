@@ -50,18 +50,19 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 });
 export const logout = catchAsyncErrors(async (req, res, next) => {
   res
-    .status(201)
+    .status(200) // Set appropriate HTTP status code for successful logout
     .cookie("token", "", {
-      httpOnly: false,
-      expires: new Date(Date.now()), // Set the expiration date to now to invalidate the cookie
+      httpOnly: false, // Allow client-side JavaScript to access cookie (if needed)
+      expires: new Date(0), // Set expiration date to epoch time (Jan 1, 1970) to delete the cookie
       secure: process.env.NODE_ENV === "production", // Use secure flag in production
-      sameSite: "None", // Set SameSite to None for cross-site requests
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Adjusted for development and production
     })
     .json({
       success: true,
       message: "Logged Out Successfully.",
     });
 });
+
 export const getUser = catchAsyncErrors((req, res, next) => {
   const user = req.user;
   res.status(200).json({
