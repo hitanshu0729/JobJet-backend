@@ -56,7 +56,6 @@ export const postApplication = catchAsyncErrors(async (req, res, next) => {
   if (!jobDetails) {
     return next(new ErrorHandler("Job not found!", 404));
   }
-
   const employerID = {
     user: jobDetails.postedBy,
     role: "Employer",
@@ -108,7 +107,6 @@ export const employerGetAllApplications = catchAsyncErrors(
     });
   }
 );
-
 export const jobseekerGetAllApplications = catchAsyncErrors(
   async (req, res, next) => {
     const { role } = req.user;
@@ -125,7 +123,6 @@ export const jobseekerGetAllApplications = catchAsyncErrors(
     });
   }
 );
-
 export const jobseekerDeleteApplication = catchAsyncErrors(
   async (req, res, next) => {
     const { role } = req.user;

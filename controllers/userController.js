@@ -22,7 +22,6 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   });
   sendToken(user, 201, res, "User Registered!");
 });
-
 export const login = catchAsyncErrors(async (req, res, next) => {
   try {
     const { email, password, role } = req.body;
@@ -53,7 +52,7 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
     .status(200) // Set appropriate HTTP status code for successful logout
     .cookie("token", "", {
       httpOnly: false, // Allow client-side JavaScript to access cookie (if needed)
-      expires: new Date(0), // Set expiration date to epoch time (Jan 1, 1970) to delete the cookie
+      expires: new Date(Date.now()), // Set expiration date to epoch time (Jan 1, 1970) to delete the cookie
       secure: process.env.NODE_ENV === "production", // Use secure flag in production
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Adjusted for development and production
     })
@@ -62,7 +61,6 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
       message: "Logged Out Successfully.",
     });
 });
-
 export const getUser = catchAsyncErrors((req, res, next) => {
   const user = req.user;
   res.status(200).json({
